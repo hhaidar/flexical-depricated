@@ -1,0 +1,40 @@
+
+.flex(@flex: 1) {
+    -webkit-box-flex: @flex;
+    -moz-box-flex: @flex;
+    box-flex: @flex;
+}
+
+.box {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+}
+
+.horizontal {
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    box-orient: horizontal;
+    .box;
+}
+
+.vertical {
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+    .box;
+}
+
+.fancy-scroll {
+    *::-webkit-scrollbar {
+        .square(10px);
+        .opacity(70);
+    }
+    *::-webkit-scrollbar-track-piece  {
+        background-color: #333;
+    }
+    *::-webkit-scrollbar-thumb:vertical {
+        height: 50px;
+        background-color: #555;
+    }
+}
