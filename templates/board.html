@@ -1,13 +1,6 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Flexical &middot; Status</title>
-    <link rel="stylesheet" href="media/css/style.css" />
-    <script type="text/javascript" src="media/js/jquery.js"></script>
-    <script type="text/javascript" src="media/js/board.js"></script>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block page %}
     <header>
         <div class="content">
             <h1>FLEXICAL</h1>
@@ -67,5 +60,4 @@
             <img src="media/img/funkaoshi.jpg" />
         </div>
     </footer>
-</body>
-</html>
+{% endblock %}

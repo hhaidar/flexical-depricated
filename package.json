@@ -1,0 +1,23 @@
+{
+    "name": "flexical",
+    "version": "0.0.1",
+    "author": "Houssam Haidar <houssam@sdelements.com>",
+    "keywords": [
+        "status board"
+    ],
+    "scripts": {
+        "start": "nodejs app.js"
+    },
+    "dependencies": {
+        "express": "*",
+        "socket.io": "*",
+        "swig": "*",
+        "underscore": "*",
+        "consolidate": "*"
+    },
+    "license": "MIT",
+    "engine": {
+        "node": ">=0.7"
+    }
+}
+
