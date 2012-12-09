@@ -4,10 +4,12 @@
         <meta charset="UTF-8" />
         <title>Flexical &middot; Status</title>
         <link rel="stylesheet" href="{{ media_url }}/css/style.css" />
-        <script type="text/javascript" src="{{ media_url }}/js/jquery.js"></script>
-        <script type="text/javascript" src="{{ media_url }}/media/js/board.js"></script>
+        <script type="text/javascript" src="{{ media_url }}/js/lib/jquery.js"></script>
+        <script type="text/javascript" src="{{ media_url }}/js/lib/underscore.js"></script>
+        <script type="text/javascript" src="{{ media_url }}/js/lib/backbone.js"></script>
     </head>
     <body>
         {% block page %}{% endblock %}
+        {% block page_js %}{% endblock %}
     </body>
 </html>

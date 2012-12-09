@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+{% block page_js %} 
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="{{ media_url }}/js/models.js"></script>
+    <script type="text/javascript" src="{{ media_url }}/js/views.js"></script>
+    <script type="text/javascript" src="{{ media_url }}/js/board.js"></script>
+{% endblock %}
+
 {% block page %}
     <header>
         <div class="content">
