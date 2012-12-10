@@ -13,7 +13,9 @@
         "socket.io": "*",
         "swig": "*",
         "underscore": "*",
-        "consolidate": "*"
+        "consolidate": "*",
+        "async": "*",
+        "request": "*"
     },
     "license": "MIT",
     "engine": {
