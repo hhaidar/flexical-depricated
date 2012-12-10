@@ -1,3 +1,4 @@
+var _ = require('underscore');
 var express = require('express');
 var cons = require('consolidate');
 var swig = require('swig');
@@ -15,7 +16,8 @@ var Flexical = function() {
     this.app.configure(function() {
         swig.init({
             root: 'templates',
-            allowErrors: true
+            allowErrors: true,
+            cache: false
         });
         self.app.engine('.html', cons.swig);
         self.app.set('view engine', 'html');
@@ -46,10 +48,25 @@ var Flexical = function() {
     this.io.set('log level', 0);
 
     this.io.sockets.on('connection', function(client) {
-
-        console.log('connected');
-
+        this.emit('widgets:init', self.widgets);
     });
+    
+    //
+    // Widgets
+    //
+    this.widgets = require('./widgets.js');
+    this.timers = {};
+    _.each(this.widgets, function(widget, id) {
+        self.timers[id] = setInterval(function() {
+            widget.fetch(function(data) {
+                data = _.extend({
+                    id: id
+                }, data);
+                self.widgets[id].data = data;
+                self.io.sockets.emit('widget:update', data);
+            });
+        }, widget.interval || 5000);
+    })
     
     //
     // Listen

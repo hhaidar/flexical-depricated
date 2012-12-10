@@ -5,8 +5,12 @@
         <title>Flexical &middot; Status</title>
         <link rel="stylesheet" href="{{ media_url }}/css/style.css" />
         <script type="text/javascript" src="{{ media_url }}/js/lib/jquery.js"></script>
+        <script type="text/javascript" src="{{ media_url }}/js/lib/handlebars.js"></script>
         <script type="text/javascript" src="{{ media_url }}/js/lib/underscore.js"></script>
         <script type="text/javascript" src="{{ media_url }}/js/lib/backbone.js"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="{{ media_url }}/js/views.js"></script>
+        <script type="text/javascript" src="{{ media_url }}/js/board.js"></script>
     </head>
     <body>
         {% block page %}{% endblock %}
