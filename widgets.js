@@ -13,7 +13,7 @@ module.exports = {
             var servers = config.servers;
             _.each(servers, function(server, id) {
                 requests.push(function(callback) {
-                    var current = { 
+                    var current = {
                         id: id,
                         name: server.name,
                         status: 'up'
@@ -72,5 +72,5 @@ module.exports = {
                 emitter(data);
             });
         }
-    }
+    },
 }

@@ -2359,7 +2359,7 @@ table [class*=span],
 .open {
   *z-index: 1000;
 }
-.open > .dropdown-menu {
+.open  > .dropdown-menu {
   display: block;
 }
 .pull-right > .dropdown-menu {
@@ -5050,6 +5050,10 @@ header .content h1 {
   font-size: 300%;
   line-height: 140%;
   margin-left: 30px;
+}
+.widget time {
+  font-size: 600%;
+  text-align: center;
 }
 footer .content {
   width: 100%;
