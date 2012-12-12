@@ -15,5 +15,10 @@ module.exports = {
                 return body.match(/1 Billion/i) ? true : false;
             }
         }
+    },
+    'internal_servers': {
+        'secret-moon-base': {
+            url: 'http://example.com'
+        }
     }
 }
