@@ -23,6 +23,22 @@
                 {% endraw %}
             </div>
         </div>
+        <div class="column">
+            <div class="widget" data-id="internal-servers" data-color="orange">
+                <div class="content">
+                    <h2 class="title" data-field="title">Internal Server Status</h2>
+                    <ul class="servers" data-list="servers"></ul>
+                    <time data-field="updated"></time>
+                </div>
+                {% raw %}
+                    <script type="text/x-handlebars-template" data-template="server">
+                        <li class="server" data-item="server" data-id="{{id}}">
+                            {{id}} - {{status}}
+                        </li>
+                    </script>
+                {% endraw %}
+            </div>
+        </div>
     </div>
     <footer>
         <div class="content"></div>

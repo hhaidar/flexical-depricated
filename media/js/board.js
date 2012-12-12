@@ -4,7 +4,8 @@ var Flexical = function() {
     var self = this;
 
     this.widgets = {
-        'servers': new window.ServersView
+        'servers': new window.ServersView,
+        'internal-servers': new window.InternalServersView
     }
 
     this.socket = io.connect();

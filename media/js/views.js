@@ -18,3 +18,7 @@ window.ServersView = Backbone.View.extend({
         });
     },
 });
+
+window.InternalServersView = window.ServersView.extend({
+    el: '[data-id="internal-servers"]',
+});
