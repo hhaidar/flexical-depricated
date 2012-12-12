@@ -4,7 +4,9 @@ var Flexical = function() {
     var self = this;
 
     this.widgets = {
-        'servers': new window.ServersView
+        'servers': new window.ServersView,
+        'internal-servers': new window.InternalServersView,
+        'tts': new window.ScotchView,
     }
 
     this.socket = io.connect();
@@ -12,7 +14,7 @@ var Flexical = function() {
     this.socket.on('connect', function(data) {
         console.log('connected');
     });
-    
+
     this.socket.on('widgets:init', function(widgets) {
         _.each(widgets, function(widget) {
             if (widget.data) {
@@ -35,7 +37,7 @@ var Flexical = function() {
             }
         }
     });
- 
+
 }
 
 $(function() {
