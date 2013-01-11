@@ -5,15 +5,16 @@
 }
 
 body {
-    background: #222 url('../img/use_your_illusion.png');
+    background: #222;
     font: 1em 'Open Sans', Helvetica;
     color: #f2f2f2;
 }
 
 header {
+    height: 70px;
+    line-height: 70px;
     .content {
         width: 100%;
-        line-height: 60px;
         text-align: center;
         h1 {
             line-height: inherit;
@@ -21,22 +22,24 @@ header {
     }
 }
 
-.widgets {
-    padding: 0 5px;
+.row {
     .fancy-scroll;
-    &, .widget {
-        margin: 5px;
-    }
+    margin: 0 5px;
 }
 
 .column {
     width: 1em;
 }
 
+.widgets {
+    margin: 5px;
+}
+
 .widget {
     background: #222;
     height: 1em;
     padding: 5px 10px;
+    margin: 5px;
     overflow: auto;
     .box-shadow(0 0 8px #111);
     &[data-color='green'] {

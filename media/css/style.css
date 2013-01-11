@@ -4937,7 +4937,7 @@ footer {
   display: -moz-box;
   display: box;
 }
-.widgets {
+.row {
   -webkit-box-orient: horizontal;
   -moz-box-orient: horizontal;
   box-orient: horizontal;
@@ -4947,8 +4947,21 @@ footer {
   -webkit-box-flex: 1;
   -moz-box-flex: 1;
   box-flex: 1;
+  padding: 0;
+  margin: 0;
 }
 .column {
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  box-orient: vertical;
+  display: -webkit-box;
+  display: -moz-box;
+  display: box;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+}
+.widgets {
   -webkit-box-orient: vertical;
   -moz-box-orient: vertical;
   box-orient: vertical;
@@ -4975,45 +4988,48 @@ footer {
   src: url('../font/OpenSans-Regular.ttf');
 }
 body {
-  background: #222222 url('../img/use_your_illusion.png');
+  background: #222;
   font: 1em 'Open Sans', Helvetica;
   color: #f2f2f2;
 }
+header {
+  height: 70px;
+  line-height: 70px;
+}
 header .content {
   width: 100%;
-  line-height: 60px;
   text-align: center;
 }
 header .content h1 {
   line-height: inherit;
 }
-.widgets {
-  padding: 0 5px;
+.row {
+  margin: 0 5px;
 }
-.widgets *::-webkit-scrollbar {
+.row *::-webkit-scrollbar {
   width: 10px;
   height: 10px;
   opacity: 0.7;
   filter: alpha(opacity=70);
 }
-.widgets *::-webkit-scrollbar-track-piece {
+.row *::-webkit-scrollbar-track-piece {
   background-color: #333;
 }
-.widgets *::-webkit-scrollbar-thumb:vertical {
+.row *::-webkit-scrollbar-thumb:vertical {
   height: 50px;
   background-color: #555;
 }
-.widgets,
-.widgets .widget {
-  margin: 5px;
-}
 .column {
   width: 1em;
+}
+.widgets {
+  margin: 5px;
 }
 .widget {
   background: #222;
   height: 1em;
   padding: 5px 10px;
+  margin: 5px;
   overflow: auto;
   -webkit-box-shadow: 0 0 8px #111111;
   -moz-box-shadow: 0 0 8px #111111;

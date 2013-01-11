@@ -6,25 +6,81 @@
             <h1>FLEXICAL</h1>
         </div>
     </header>
-    <div class="widgets">
-        <div class="column">
-            <div class="widget" data-id="servers" data-color="teal">
-                <div class="content">
-                    <h2 class="title" data-field="title">Server Status</h2>
-                    <ul class="servers" data-list="servers"></ul>
-                    <time data-field="updated"></time>
+    <article class="widgets">
+        <div class="row">
+            <div class="column">
+                <div class="widget" data-id="servers" data-color="teal">
+                    <div class="content">
+                        <h2 class="title" data-field="title">Servers</h2>
+                        <ul class="servers" data-list="servers"></ul>
+                        <time data-field="updated"></time>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="server">
+                            <li class="server" data-item="server" data-id="{{id}}">
+                                {{id}} - {{status}}
+                            </li>
+                        </script>
+                    {% endraw %}
                 </div>
-                {% raw %}
-                    <script type="text/x-handlebars-template" data-template="server">
-                        <li class="server" data-item="server" data-id="{{id}}">
-                            {{id}} - {{status}}
-                        </li>
-                    </script>
-                {% endraw %}
+            </div>
+            <div class="column">
+                <div class="widget" data-id="servers" data-color="teal">
+                    <div class="content">
+                        <h2 class="title" data-field="title">Support</h2>
+                        <ul class="servers" data-list="servers"></ul>
+                        <time data-field="updated"></time>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="server">
+                            <li class="person" data-item="person" data-id="{{id}}">
+                                <img src="{{ avatar }}" />
+                                {{ name }}
+                            </li>
+                        </script>
+                    {% endraw %}
+                </div>
             </div>
         </div>
-    </div>
-    <footer>
-        <div class="content"></div>
-    </footer>
+        <div class="row">
+            {% for widget in widgets %}
+            <div class="column">
+                <div class="widget" data-id="servers" data-color="teal">
+                    <div class="content">
+                        <h2 class="title" data-field="title">Server Status</h2>
+                        <ul class="servers" data-list="servers"></ul>
+                        <time data-field="updated"></time>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="server">
+                            <li class="server" data-item="server" data-id="{{id}}">
+                                {{id}} - {{status}}
+                            </li>
+                        </script>
+                    {% endraw %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for widget in widgets %}
+            <div class="column">
+                <div class="widget" data-id="servers" data-color="teal">
+                    <div class="content">
+                        <h2 class="title" data-field="title">Server Status</h2>
+                        <ul class="servers" data-list="servers"></ul>
+                        <time data-field="updated"></time>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="server">
+                            <li class="server" data-item="server" data-id="{{id}}">
+                                {{id}} - {{status}}
+                            </li>
+                        </script>
+                    {% endraw %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </article>
 {% endblock %}

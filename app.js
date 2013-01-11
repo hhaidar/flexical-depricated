@@ -30,7 +30,8 @@ var Flexical = function() {
     //
     this.app.get('/', function (req, res) {
         res.render('board.html', {
-            media_url: '/media'
+            media_url: '/media',
+            widgets: [0, 1, 2, 3, 4, 5]
         });
     });
 
