@@ -5519,6 +5519,7 @@ header .title {
   text-align: center;
 }
 header .title h1 {
+  text-transform: uppercase;
   line-height: inherit;
   font-size: 50px;
   margin: 0;
