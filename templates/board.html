@@ -5,7 +5,13 @@
         <div class="column">
         </div>
         <div class="column title">
-            <h1>FLEXICAL</h1>
+            <h1>
+                {% if config.board.title %}
+                    {{ config.board.title }}
+                {% else %}
+                    Flexical
+                {% endif %}
+            </h1>
         </div>
         <div class="column status">
             <i class="icon-exchange" data-indicator="connected"></i>

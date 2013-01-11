@@ -1,4 +1,7 @@
 module.exports = {
+    'board': {
+        'title': 'Flexical'
+    },
     'iteration': {
         'version': '1.0',
         'description': 'Workin\' on stuffs'
