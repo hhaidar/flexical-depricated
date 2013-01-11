@@ -5,40 +5,61 @@
 }
 
 body {
-    background: #222 url('../img/use_your_illusion.png');
     font: 1em 'Open Sans', Helvetica;
-    color: #f2f2f2;
+    color: #444;
 }
 
 header {
-    .content {
-        width: 100%;
-        line-height: 60px;
+    height: 70px;
+    line-height: 70px;
+    .column {
+        padding: 0 20px;
+    }
+    .title {
         text-align: center;
         h1 {
             line-height: inherit;
+            font-size: 50px;
+            margin: 0;
         }
+    }
+    .status {
+        font-size: 40px;
+        text-align: right;
+    }
+    [data-indicator="connected"] {
+        color: #00a600;
+    }
+    [data-indicator="disconnected"] {
+        color: #ac193d;
     }
 }
 
-.widgets {
-    padding: 0 5px;
+.row {
     .fancy-scroll;
-    &, .widget {
-        margin: 5px;
-    }
+    margin: 0 5px;
 }
 
 .column {
     width: 1em;
 }
 
+.widgets {
+    margin: 5px;
+}
+
 .widget {
     background: #222;
     height: 1em;
-    padding: 5px 10px;
+    color: #aaa;
+    text-align: center;
+    margin: 5px;
+    padding: 15px;
     overflow: auto;
     .box-shadow(0 0 8px #111);
+    &[data-color] {
+        color: #f2f2f2;
+    }
     &[data-color='green'] {
         background-color: #00a600;
     }
@@ -57,19 +78,80 @@ header {
     &[data-color='teal'] {
         background-color: #008299;
     }
-    .content {
+    table {
         width: 100%;
+        font-size: 20px;
+        text-align: left;
+        td {
+            padding: 10px;
+        }
     }
     .title {
-        font-size: 400%;
-        line-height: 120%;
-        color: #fff;
-        text-align: center;
+        line-height: 100%;
+        font-size: 40px;
+        margin-bottom: 15px;
     }
-    .server {
-        font-size: 300%;
-        line-height: 140%;
-        margin-left: 30px;
+    .people {
+        overflow: hidden;
+        .person {
+            display: block;
+            width: 50%;
+            float: left;
+            .avatar {
+                display: inline-block;
+                position: relative;
+                margin-bottom: 10px;
+                img {
+                    width: 150px;
+                    .border-radius(100%);
+                }
+                .tier {
+                    .square(34px);
+                    line-height: 34px;
+                    font-size: 22px;
+                    color: #fff;
+                    background: red;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    .border-radius(100%);
+                }
+            }
+            .meta {
+                display: block;
+            }
+        }
+    }
+    .stats {
+        font-size: 25px;
+    }
+    .servers {
+        font-size: 16px;
+        padding: 0;
+        margin: 0;
+        margin-top: 5px;
+        display: block;
+        overflow: hidden;
+        li {
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            display: inline-block;
+            &:after {
+                content: ', ';
+            }
+            &:last-child {
+                &:after {
+                    content: '';
+                }
+            }
+        }
+    }
+    .percentage,
+    .focus-text {
+        font-size: 80px;
+        color: #fff;
     }
 }
 
