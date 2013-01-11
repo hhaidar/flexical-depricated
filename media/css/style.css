@@ -5559,7 +5559,7 @@ header [data-indicator="disconnected"] {
 .widget {
   background: #222;
   height: 1em;
-  color: #aaa;
+  color: #bbb;
   text-align: center;
   margin: 5px;
   padding: 15px;
@@ -5567,9 +5567,6 @@ header [data-indicator="disconnected"] {
   -webkit-box-shadow: 0 0 8px #111111;
   -moz-box-shadow: 0 0 8px #111111;
   box-shadow: 0 0 8px #111111;
-}
-.widget[data-color] {
-  color: #f2f2f2;
 }
 .widget[data-color='green'] {
   background-color: #00a600;
@@ -5591,11 +5588,11 @@ header [data-indicator="disconnected"] {
 }
 .widget table {
   width: 100%;
-  font-size: 20px;
-  text-align: left;
+  color: #fff;
+  font-size: 24px;
 }
 .widget table td {
-  padding: 10px;
+  padding: 10px 5px;
 }
 .widget .title {
   line-height: 100%;
@@ -5606,8 +5603,9 @@ header [data-indicator="disconnected"] {
   overflow: hidden;
 }
 .widget .people .person {
-  display: block;
   width: 50%;
+  color: #fff;
+  display: block;
   float: left;
 }
 .widget .people .person .avatar {
