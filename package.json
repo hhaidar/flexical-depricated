@@ -15,7 +15,8 @@
         "underscore": "*",
         "consolidate": "*",
         "async": "*",
-        "request": "*"
+        "request": "*",
+        "hat": "*"
     },
     "license": "MIT",
     "engine": {
