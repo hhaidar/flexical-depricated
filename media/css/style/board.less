@@ -52,15 +52,12 @@ header {
 .widget {
     background: #222;
     height: 1em;
-    color: #aaa;
+    color: #bbb;
     text-align: center;
     margin: 5px;
     padding: 15px;
     overflow: auto;
     .box-shadow(0 0 8px #111);
-    &[data-color] {
-        color: #f2f2f2;
-    }
     &[data-color='green'] {
         background-color: #00a600;
     }
@@ -81,10 +78,10 @@ header {
     }
     table {
         width: 100%;
-        font-size: 20px;
-        text-align: left;
+        color: #fff;
+        font-size: 24px;
         td {
-            padding: 10px;
+            padding: 10px 5px;
         }
     }
     .title {
@@ -95,8 +92,9 @@ header {
     .people {
         overflow: hidden;
         .person {
-            display: block;
             width: 50%;
+            color: #fff;
+            display: block;
             float: left;
             .avatar {
                 display: inline-block;
