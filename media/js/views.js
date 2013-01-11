@@ -42,8 +42,8 @@ window.ServersView = Backbone.View.extend({
         });
         var total = _.size(up) + _.size(down);
         var percentage = Math.ceil(_.size(up) / total * 100);
-        // Set percentaage
-        this.animateCount(this.$('.percentage .value'), percentage);
+        // Set percentage
+	this.$('.percentage .value').html(_.size(down) > 0 ? '<i class="icon-warning-sign"></i> ERR' : '<i class="icon-ok"></i> OK');
         // Set stats
         this.$('.up').toggle(_.size(up) > 0)
             .find('.value').text(_.size(up));
