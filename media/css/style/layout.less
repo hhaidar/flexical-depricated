@@ -9,18 +9,14 @@ body {
 }
 
 header {
-    height: 50px;
-    .box;
+    .horizontal;
 }
 
-footer {
-    height: 50px;
-    .box;
-}
-
-.widgets {
+.row {
     .horizontal;
     .flex(1);
+    padding: 0;
+    margin: 0;
 }
 
 .column {
@@ -28,8 +24,13 @@ footer {
     .flex(1);
 }
 
-.widget {
-    .box;
+.widgets {
+    .vertical;
     .flex(1);
-    .box-sizing(border-box);
+}
+
+.widget {
+    .vertical;
+    .flex(1);
+    .box-pack(center);
 }

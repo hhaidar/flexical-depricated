@@ -2,12 +2,19 @@ var _ = require('underscore');
 var express = require('express');
 var cons = require('consolidate');
 var swig = require('swig');
+var hat = require('hat');
 var http = require('http');
+var fs = require('fs');   
+
+var config = require('./config.js');
 
 var Flexical = function() {
 
     var self = this;
     
+    // Instance id
+    this.id = hat();
+
     this.app = express();
     
     //
@@ -30,7 +37,8 @@ var Flexical = function() {
     //
     this.app.get('/', function (req, res) {
         res.render('board.html', {
-            media_url: '/media'
+            media_url: '/media',
+            config: config
         });
     });
 
@@ -48,7 +56,8 @@ var Flexical = function() {
     this.io.set('log level', 0);
 
     this.io.sockets.on('connection', function(client) {
-        this.emit('widgets:init', self.widgets);
+        client.emit('board:id', self.id);
+        client.emit('widgets:init', self.widgets);
     });
     
     //
@@ -57,7 +66,8 @@ var Flexical = function() {
     this.widgets = require('./widgets.js');
     this.timers = {};
     _.each(this.widgets, function(widget, id) {
-        self.timers[id] = setInterval(function() {
+        var fetch;
+        self.timers[id] = setInterval(fetch = function() {
             widget.fetch(function(data) {
                 data = _.extend({
                     id: id
@@ -66,6 +76,7 @@ var Flexical = function() {
                 self.io.sockets.emit('widget:update', data);
             });
         }, widget.interval || 5000);
+        fetch();
     })
     
     //

@@ -1,30 +1,150 @@
 {% extends 'base.html' %}
 
 {% block page %}
-    <header>
-        <div class="content">
+    <header id="header">
+        <div class="column">
+        </div>
+        <div class="column title">
             <h1>FLEXICAL</h1>
         </div>
+        <div class="column status">
+            <i class="icon-exchange" data-indicator="connected"></i>
+            <i class="icon-spinner icon-spin" data-indicator="connecting"></i>
+            <i class="icon-warning-sign" data-indicator="disconnected"></i>
+        </div>
     </header>
-    <div class="widgets">
-        <div class="column">
-            <div class="widget" data-id="servers" data-color="teal">
-                <div class="content">
-                    <h2 class="title" data-field="title">Server Status</h2>
-                    <ul class="servers" data-list="servers"></ul>
-                    <time data-field="updated"></time>
+    <article class="widgets">
+        <div class="row">
+            <div class="column">
+                <div class="widget" data-id="production-servers">
+                    <div class="content">
+                        <h2 class="title" data-field="title">Production Servers</h2>
+                        <div class="percentage">
+                            <span class="value">??</span>%
+                        </div>
+                        <div class="stats">
+                            <span class="up">
+                                <span class="value"25">??</span> up
+                            </span>
+                            <span class="separator">&middot;</span>
+                            <span class="down">
+                                <span class="value"25">??</span> down
+                            </span>
+                        </div>
+                        <ul class="servers"></ul>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="server">
+                            <li class="server" data-item="server" data-id="{{id}}">
+                                {{name}}
+                            </li>
+                        </script>
+                    {% endraw %}
                 </div>
-                {% raw %}
-                    <script type="text/x-handlebars-template" data-template="server">
-                        <li class="server" data-item="server" data-id="{{id}}">
-                            {{id}} - {{status}}
-                        </li>
-                    </script>
-                {% endraw %}
+            </div>
+            <div class="column">
+                <div class="widget" data-id="internal-servers">
+                    <div class="content">
+                        <h2 class="title" data-field="title">Internal Servers</h2>
+                        <div class="percentage">
+                            <span class="value">??</span>%
+                        </div>
+                        <div class="stats">
+                            <span class="up">
+                                <span class="value"25">??</span> up
+                            </span>
+                            <span class="separator">&middot;</span>
+                            <span class="down">
+                                <span class="value"25">??</span> down
+                            </span>
+                        </div>
+                        <ul class="servers"></ul>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="server">
+                            <li class="server" data-item="server" data-id="{{id}}">
+                                {{name}}
+                            </li>
+                        </script>
+                    {% endraw %}
+                </div>
+            </div>
+            <div class="column">
+                <div class="widget" data-id="web-servers" >
+                    <div class="content">
+                        <h2 class="title" data-field="title">Web Servers</h2>
+                        <div class="percentage">
+                            <span class="value">??</span>%
+                        </div>
+                        <div class="stats">
+                            <span class="up">
+                                <span class="value"25">??</span> up
+                            </span>
+                            <span class="separator">&middot;</span>
+                            <span class="down">
+                                <span class="value"25">??</span> down
+                            </span>
+                        </div>
+                        <ul class="servers"></ul>                           
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="server">
+                            <li class="server" data-item="server" data-id="{{id}}">
+                                {{name}}
+                            </li>
+                        </script>
+                    {% endraw %}
+                </div>
             </div>
         </div>
-    </div>
-    <footer>
-        <div class="content"></div>
-    </footer>
+        <div class="row">
+            <div class="column">
+                <div class="widget" data-id="iteration" >
+                    <div class="content">
+                        <h2 class="title" data-field="title">Iteration</h2>
+                        <time class="focus-text">{{ config.iteration.version }}</time>
+                        <div class="count">
+                            {{ config.iteration.description }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="widget" data-id="events" >
+                    <div class="content">
+                        <h2 class="title" data-field="title">Events</h2>
+                        <table>
+                            {% for event in config.events %}
+                                <tr data-item="event">
+                                    <td>{{ event.date }}</td>
+                                    <td>{{ event.name }}</td>
+                                    <td>{{ event.description }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="widget" data-id="support">
+                    <div class="content">
+                        <h2 class="title" data-field="title">Support</h2>
+                        <ul class="people" data-list="people">
+                            {% for person in config.support %}
+                                <li class="person" data-item="person">
+                                    <span class="avatar">
+                                        <img src="https://www.gravatar.com/avatar/{{ person.gravatar }}?s=200" />
+                                        <span class="tier">{{ person.tier }}</span>
+                                    </span>
+                                    <div class="meta">
+                                        {{ person.name }}
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
 {% endblock %}
