@@ -62,3 +62,19 @@ window.ServersView = Backbone.View.extend({
         this.$el.attr('data-color', _.size(down) > 0 ? 'red' : this.color);
     },
 });
+
+
+window.IterationView = Backbone.View.extend({
+    initialize: function() {
+        var self = this;
+        this.template = Handlebars.compile(this.$('[data-template]').html());
+        console.log("initialized");
+    },
+    update: function(data) {
+        var self = this;
+        self.$('.title').text("Iteration " + data.milestone);
+        _.each(data.tickets, function(ticket) {
+            self.$('.tickets').append(self.template({ticket: ticket}));
+        });
+    }
+});
