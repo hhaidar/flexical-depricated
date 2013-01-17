@@ -25,7 +25,7 @@
                 <div class="widget" data-id="production-servers">
                     <div class="content">
                         <h2 class="title" data-field="title">Production Servers</h2>
-                        <div class="percentage">
+                        <div class="status focus-text">
                             <span class="value">??</span>
                         </div>
                         <div class="stats">
@@ -52,7 +52,7 @@
                 <div class="widget" data-id="internal-servers">
                     <div class="content">
                         <h2 class="title" data-field="title">Internal Servers</h2>
-                        <div class="percentage">
+                        <div class="status focus-text">
                             <span class="value">??</span>
                         </div>
                         <div class="stats">
@@ -79,7 +79,7 @@
                 <div class="widget" data-id="web-servers" >
                     <div class="content">
                         <h2 class="title" data-field="title">Web Servers</h2>
-                        <div class="percentage">
+                        <div class="status focus-text">
                             <span class="value">??</span>
                         </div>
                         <div class="stats">
@@ -141,7 +141,7 @@
             <div class="column">
                 <div class="widget" data-id="support">
                     <div class="content">
-                        <h2 class="title" data-field="title">Support</h2>
+                        <h2 id="zendesk-count" class="title" data-field="title">Support</h2>
                         <ul class="people" data-list="people">
                             {% for person in config.support %}
                                 <li class="person" data-item="person">
@@ -155,6 +155,7 @@
                                 </li>
                             {% endfor %}
                         </ul>
+                        <p>Oldest ticket updated <span id="zendesk-oldest"></span>.</p>
                     </div>
                 </div>
             </div>

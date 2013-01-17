@@ -11,26 +11,30 @@ window.BoardView = Backbone.View.extend({
     }
 });
 
+
+window.ZendeskView = Backbone.View.extend({
+    initialize: function () {
+        this.field = this.$('#zendesk-count');
+        this.$('p').hide();
+    },
+    update: function(data) {
+        if (data.error) {
+            this.field.text(data.error)
+        } else {
+            this.field.text(data.count + " Support Tickets");
+        }
+        if (data.oldest) {
+            this.$('p').show();
+            this.$('#zendesk-oldest').text(moment(data.oldest).fromNow());
+        }
+    }
+});
+
+
 window.ServersView = Backbone.View.extend({
     initialize: function() {
-        var self = this;
         this.color = this.$el.data('color') || '';
         this.template = Handlebars.compile(this.$('[data-template]').html());
-    },
-    animateCount: function($element, value) {
-        var current = parseInt($element.text());
-        current = isNaN(current) ? 0 : current;
-        jQuery({
-            value: current
-        }).animate({
-            value: value
-        }, {
-            duration: 1000,
-            easing:'swing',
-            step: function() {
-                $element.text(Math.ceil(this.value));
-            }
-        });
     },
     update: function(data) {
         var self = this;
@@ -41,9 +45,8 @@ window.ServersView = Backbone.View.extend({
             status: 'down'
         });
         var total = _.size(up) + _.size(down);
-        var percentage = Math.ceil(_.size(up) / total * 100);
-        // Set percentage
-	this.$('.percentage .value').html(_.size(down) > 0 ? '<i class="icon-warning-sign"></i> ERR' : '<i class="icon-ok"></i> OK');
+        // Set status
+        this.$('.status .value').html(_.size(down) > 0 ? '<i class="icon-warning-sign"></i> ERR' : '<i class="icon-ok"></i> OK');
         // Set stats
         this.$('.up').toggle(_.size(up) > 0)
             .find('.value').text(_.size(up));

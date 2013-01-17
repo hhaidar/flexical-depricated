@@ -17,11 +17,11 @@
         "async": "*",
         "request": "*",
         "hat": "*",
-        "jsonrpc2": "*"
+        "jsonrpc2": "*",
+        "node-zendesk": "*"
     },
     "license": "MIT",
     "engine": {
         "node": ">=0.7"
     }
 }
-

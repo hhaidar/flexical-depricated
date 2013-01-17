@@ -17,6 +17,9 @@ var Flexical = function() {
         }),
         'iteration': new window.IterationView({
             el: '[data-id="iteration"]'
+        }),
+        'zendesk': new window.ZendeskView({
+            el: '[data-id="support"]'
         })
     }
 
