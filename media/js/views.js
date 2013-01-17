@@ -20,7 +20,7 @@ window.ZendeskView = Backbone.View.extend({
         if (data.error) {
             this.field.text(data.error)
         } else {
-            this.field.text(data.count + " outstanding tickets.");
+            this.field.text(data.count + " Support Tickets");
         }
     }
 });
