@@ -14,6 +14,9 @@ var Flexical = function() {
         }),
         'web-servers': new window.ServersView({
             el: '[data-id="web-servers"]'
+        }),
+        'iteration': new window.IterationView({
+            el: '[data-id="iteration"]'
         })
     }
 
@@ -26,7 +29,7 @@ var Flexical = function() {
     this.socket.on('connect', function() {
         self.view.status('connected');
     });
-    
+
     this.socket.on('disconnect', function() {
         self.view.status('disconnected');
     });

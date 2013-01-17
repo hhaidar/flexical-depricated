@@ -91,7 +91,7 @@
                                 <span class="value"25">??</span> down
                             </span>
                         </div>
-                        <ul class="servers"></ul>                           
+                        <ul class="servers"></ul>
                     </div>
                     {% raw %}
                         <script type="text/x-handlebars-template" data-template="server">
@@ -108,11 +108,18 @@
                 <div class="widget" data-id="iteration" >
                     <div class="content">
                         <h2 class="title" data-field="title">Iteration</h2>
-                        <time class="focus-text">{{ config.iteration.version }}</time>
-                        <div class="stats">
-                            {{ config.iteration.description }}
-                        </div>
+                        <table class="tickets">
+                        </table>
                     </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="server">
+                            <tr data-item="ticket" data-id="{{ ticket.id }}">
+                                <td>{{ ticket.id }}</td>
+                                <td>{{ ticket.status }}</td>
+                                <td>{{ ticket.summary }}</td>
+                            </tr>
+                        </script>
+                    {% endraw %}
                 </div>
             </div>
             <div class="column">

@@ -16,7 +16,8 @@
         "consolidate": "*",
         "async": "*",
         "request": "*",
-        "hat": "*"
+        "hat": "*",
+        "jsonrpc2": "*"
     },
     "license": "MIT",
     "engine": {
