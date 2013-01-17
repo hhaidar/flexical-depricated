@@ -49,10 +49,16 @@ var checkZendesk = function (client, emitter) {
             return;
         }
         // TODO: Filter out closed tickets in the request, rather than in JS.
-        var open = _(result).filter(function (t) { 
+        var open = _.chain(result).filter(function (t) { 
             return t.status !== 'closed'
+        }).sortBy(function (t) {
+            return t.updated_at
+        }).value();
+        var oldest = open[0];
+        emitter({
+            'count': _(open).size(),
+            'oldest': oldest.updated_at
         });
-        emitter({'count': _(open).size()});
     });
 }
 
