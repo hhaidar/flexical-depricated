@@ -14,6 +14,9 @@ var Flexical = function() {
         }),
         'web-servers': new window.ServersView({
             el: '[data-id="web-servers"]'
+        }),
+        'zendesk': new window.ZendeskView({
+            el: '[data-id="support"]'
         })
     }
 
