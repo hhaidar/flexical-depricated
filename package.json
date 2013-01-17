@@ -16,11 +16,11 @@
         "consolidate": "*",
         "async": "*",
         "request": "*",
-        "hat": "*"
+        "hat": "*",
+        "node-zendesk": "*"
     },
     "license": "MIT",
     "engine": {
         "node": ">=0.7"
     }
 }
-
