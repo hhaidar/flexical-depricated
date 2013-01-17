@@ -11,9 +11,23 @@ window.BoardView = Backbone.View.extend({
     }
 });
 
+
+window.ZendeskView = Backbone.View.extend({
+    initialize: function () {
+        this.field = this.$('#zendesk-count')
+    },
+    update: function(data) {
+        if (data.error) {
+            this.field.text("Error connecting to Zendesk.")
+        } else {
+            this.field.text(data.count + " outstanding tickets.");
+        }
+    }
+});
+
+
 window.ServersView = Backbone.View.extend({
     initialize: function() {
-        var self = this;
         this.color = this.$el.data('color') || '';
         this.template = Handlebars.compile(this.$('[data-template]').html());
     },
@@ -43,7 +57,7 @@ window.ServersView = Backbone.View.extend({
         var total = _.size(up) + _.size(down);
         var percentage = Math.ceil(_.size(up) / total * 100);
         // Set percentage
-	this.$('.percentage .value').html(_.size(down) > 0 ? '<i class="icon-warning-sign"></i> ERR' : '<i class="icon-ok"></i> OK');
+	    this.$('.percentage .value').html(_.size(down) > 0 ? '<i class="icon-warning-sign"></i> ERR' : '<i class="icon-ok"></i> OK');
         // Set stats
         this.$('.up').toggle(_.size(up) > 0)
             .find('.value').text(_.size(up));

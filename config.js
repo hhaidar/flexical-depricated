@@ -32,6 +32,11 @@ module.exports = {
             tier: 'II'
         }
     },
+    'zendesk': {
+        username:  'ramanan@sdelements.com',
+        token:     '9SmudzycA3lV5Kl6N4IoOdbcux0WY1vaEDr017Uk',
+        remoteUri: 'https://sdelements.zendesk.com/api/v2'
+    },
     'production-servers': {
         'google': {
             name: 'Google',
