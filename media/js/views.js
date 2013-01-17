@@ -18,7 +18,7 @@ window.ZendeskView = Backbone.View.extend({
     },
     update: function(data) {
         if (data.error) {
-            this.field.text("Error connecting to Zendesk.")
+            this.field.text(data.error)
         } else {
             this.field.text(data.count + " outstanding tickets.");
         }
