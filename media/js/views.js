@@ -14,13 +14,18 @@ window.BoardView = Backbone.View.extend({
 
 window.ZendeskView = Backbone.View.extend({
     initialize: function () {
-        this.field = this.$('#zendesk-count')
+        this.field = this.$('#zendesk-count');
+        this.$('p').hide();
     },
     update: function(data) {
         if (data.error) {
             this.field.text(data.error)
         } else {
             this.field.text(data.count + " Support Tickets");
+        }
+        if (data.oldest) {
+            this.$('p').show();
+            this.$('#zendesk-oldest').text(moment(data.oldest).fromNow());
         }
     }
 });
