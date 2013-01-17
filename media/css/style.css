@@ -5660,7 +5660,6 @@ header [data-indicator="disconnected"] {
 .widget .servers li:last-child:after {
   content: '';
 }
-.widget .percentage,
 .widget .focus-text {
   font-size: 80px;
   color: #fff;
