@@ -11,9 +11,23 @@ window.BoardView = Backbone.View.extend({
     }
 });
 
+
+window.ZendeskView = Backbone.View.extend({
+    initialize: function () {
+        this.field = this.$('#zendesk-count')
+    },
+    update: function(data) {
+        if (data.error) {
+            this.field.text(data.error)
+        } else {
+            this.field.text(data.count + " outstanding tickets.");
+        }
+    }
+});
+
+
 window.ServersView = Backbone.View.extend({
     initialize: function() {
-        var self = this;
         this.color = this.$el.data('color') || '';
         this.template = Handlebars.compile(this.$('[data-template]').html());
     },
