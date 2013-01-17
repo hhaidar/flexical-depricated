@@ -1,17 +1,18 @@
-var _ = require('underscore');
-var async = require('async');
-var http = require('http');
-var request = require('request');
-var rpc = require('jsonrpc2');
+var _       = require('underscore'),
+    async   = require('async'),
+    http    = require('http'),
+    request = require('request'),
+    rpc     = require('jsonrpc2'),
+    zendesk = require('node-zendesk')
 
-var config = require('./config.js');
+var config  = require('./config.js');
 
 
-var checkServers = function(servers, emitter) {
+var checkServers = function (servers, emitter) {
     var requests = [];
     var servers = servers;
-    _.each(servers || false, function(server, id) {
-        requests.push(function(callback) {
+    _.each(servers || false, function (server, id) {
+        requests.push(function (callback) {
             var current = {
                 id: id,
                 name: server.name,
@@ -31,7 +32,7 @@ var checkServers = function(servers, emitter) {
             });
         });
     });
-    async.series(requests, function(err, res) {
+    async.series(requests, function (err, res) {
         var data = {};
         data.servers = res;
         emitter(data);
@@ -76,8 +77,38 @@ iterationProgress.loadTickets = function(tracServer, callback) {
     });
 }
 
+var checkZendesk = function (client, emitter) {
+    // Checks the number of open tickets (here open means not closed, not just
+    // open in zendesk) and outputs that number. If we can't connect to
+    // zendesk we output an error.
+
+    client.tickets.list(function (err, req, result) {
+        if (err) {
+            emitter({'error': "Can not connect to Zendesk"})
+            return;
+        }
+        // TODO: Filter out closed tickets in the request, rather than in JS.
+        var open = _.chain(result).filter(function (t) {
+            return t.status !== 'closed'
+        }).sortBy(function (t) {
+            return t.updated_at
+        }).value();
+        var oldest = open[0];
+        emitter({
+            'count': _(open).size(),
+            'oldest': oldest.updated_at
+        });
+    });
+}
+
 
 module.exports = {
+    'zendesk': {
+        interval: 15 * 60 * 1000, // check every 15 minutes
+        fetch: function(emitter) {
+            checkZendesk(zendesk.createClient(config['zendesk']), emitter)
+        }
+    },
     'production-servers': {
         interval: 120 * 1000,
         fetch: function(emitter) {

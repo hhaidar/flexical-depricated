@@ -32,6 +32,11 @@ module.exports = {
             tier: 'II'
         }
     },
+    'zendesk': {
+        username:  'username',
+        token:     'token',
+        remoteUri: 'https://helpdesk.zendesk.com/api/v2'
+    },
     'production-servers': {
         'google': {
             name: 'Google',
