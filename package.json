@@ -17,6 +17,7 @@
         "async": "*",
         "request": "*",
         "hat": "*",
+        "jsonrpc2": "*",
         "node-zendesk": "*"
     },
     "license": "MIT",
