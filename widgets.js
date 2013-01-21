@@ -55,19 +55,48 @@ var iterationProgress = function(tracServer, emitter) {
     });
 };
 
+iterationProgress.getMilestone = function(trac, callback) {
+    trac.call("ticket.milestone.getAll", [], trac.ourOpts, function(err, result) {
+        if (result) {
+            var milestones = _.reject(result, function(x) {return isNaN(parseInt(x[0]))});
+            iterationProgress.pickActiveMilestone(trac, milestones, callback);
+        }
+    });
+};
+
+iterationProgress.pickActiveMilestone = function(trac, milestones, callback, lastMilestone) {
+    // Recursively call ourselves until the last milestone in the list is
+    // complete. Then call the callback with the milestone we were looking at
+    // before that. That is, the oldest non-complete milestone.
+    var milestone = milestones.pop();
+    trac.call("ticket.milestone.get", [milestone], trac.ourOpts, function(err, result) {
+        if (result) {
+            if (result.completed) {
+                if (lastMilestone) {
+                    callback(lastMilestone);
+                } else {
+                    throw new Error("Couldn't find the active milestone.");
+                }
+            } else {
+                iterationProgress.pickActiveMilestone(trac, milestones, callback, milestone);
+            }
+        } else {
+            throw new Error("Got error while trying to get milestone " + err);
+        }
+    });
+};
+
 iterationProgress.loadTickets = function(tracServer, callback) {
     var trac = new rpc.Client(tracServer.port, tracServer.host,
         tracServer.username, tracServer.password);
-    var opts = {path: "/login/jsonrpc"};
-    trac.call("ticket.milestone.getAll", [], opts, function(err, result) {
-        var milestones = _.reject(result, function(x) {return isNaN(parseInt(x[0]))});
-        var milestone = _.last(milestones);
+    trac.ourOpts = {path: "/login/jsonrpc"};
+    iterationProgress.getMilestone(trac, function(milestone) {
         var query = "milestone=" + milestone + "&type=User story";
-        trac.call("ticket.query", [query], opts, function(err, ticketIds) {
+        trac.call("ticket.query", [query], trac.ourOpts, function(err, ticketIds) {
             var ticketCalls = [];
             _.each(ticketIds, function(ticketId) {
                 ticketCalls.push(function(asyncCallback) {
-                    trac.call("ticket.get", [ticketId], {path: "/login/jsonrpc"}, asyncCallback);
+                    trac.call("ticket.get", [ticketId], trac.ourOpts, asyncCallback);
                 });
             });
             async.parallel(ticketCalls, function(err, tickets) {
