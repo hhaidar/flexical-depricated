@@ -76,6 +76,7 @@ window.IterationView = Backbone.View.extend({
     update: function(data) {
         var self = this;
         self.$('.title').text("Iteration " + data.milestone);
+        self.$('.tickets').empty();
         _.each(data.tickets, function(ticket) {
             self.$('.tickets').append(self.template({ticket: ticket}));
         });
