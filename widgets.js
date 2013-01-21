@@ -87,9 +87,9 @@ var checkZendesk = function (client, emitter) {
             emitter({'error': "Can not connect to Zendesk"})
             return;
         }
-        // TODO: Filter out closed tickets in the request, rather than in JS.
-        var open = _.chain(result).filter(function (t) {
-            return t.status !== 'closed'
+        // TODO: Filter out closed tickets in the request rather than in JS.
+        var open = _.chain(result).filter(function (t) { 
+            return t.status !== 'closed' && t.status !== 'solved'
         }).sortBy(function (t) {
             return t.updated_at
         }).value();
