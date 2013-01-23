@@ -21,7 +21,7 @@
     </header>
     <article class="widgets">
         <div class="row">
-            <div class="column">
+            <div class="column" style="width:33%;">
                 <div class="widget" data-id="production-servers">
                     <div class="content">
                         <h2 class="title" data-field="title">Production Servers</h2>
@@ -48,6 +48,28 @@
                     {% endraw %}
                 </div>
             </div>
+            <div class="column" style="width:66%;">
+                <div class="widget" data-id="iteration" >
+                    <div class="content">
+                        <h2 class="title" data-field="title">Iteration</h2>
+                        <ul class="summary">
+                        </ul>
+                        <table class="tickets">
+                        </table>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="ticket">
+                            <tr data-item="ticket" data-id="{{ ticket.id }}">
+                                <td>{{ ticket.id }}</td>
+                                <td>{{ ticket.status }}</td>
+                                <td>{{ ticket.summary }}</td>
+                            </tr>
+                        </script>
+                    {% endraw %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="column">
                 <div class="widget" data-id="internal-servers">
                     <div class="content">
@@ -71,53 +93,6 @@
                             <li class="server" data-item="server" data-id="{{id}}">
                                 {{name}}
                             </li>
-                        </script>
-                    {% endraw %}
-                </div>
-            </div>
-            <div class="column">
-                <div class="widget" data-id="web-servers" >
-                    <div class="content">
-                        <h2 class="title" data-field="title">Web Servers</h2>
-                        <div class="status focus-text">
-                            <span class="value">??</span>
-                        </div>
-                        <div class="stats">
-                            <span class="up">
-                                <span class="value">??</span> up
-                            </span>
-                            <span class="separator">&middot;</span>
-                            <span class="down">
-                                <span class="value">??</span> down
-                            </span>
-                        </div>
-                        <ul class="servers"></ul>
-                    </div>
-                    {% raw %}
-                        <script type="text/x-handlebars-template" data-template="server">
-                            <li class="server" data-item="server" data-id="{{id}}">
-                                {{name}}
-                            </li>
-                        </script>
-                    {% endraw %}
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column">
-                <div class="widget" data-id="iteration" >
-                    <div class="content">
-                        <h2 class="title" data-field="title">Iteration</h2>
-                        <table class="tickets">
-                        </table>
-                    </div>
-                    {% raw %}
-                        <script type="text/x-handlebars-template" data-template="server">
-                            <tr data-item="ticket" data-id="{{ ticket.id }}">
-                                <td>{{ ticket.id }}</td>
-                                <td>{{ ticket.status }}</td>
-                                <td>{{ ticket.summary }}</td>
-                            </tr>
                         </script>
                     {% endraw %}
                 </div>
