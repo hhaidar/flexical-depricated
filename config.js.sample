@@ -66,12 +66,6 @@ module.exports = {
             url: 'http://example.com/'
         }
     },
-    'web-servers': {
-        'local': {
-            name: 'Local Web Server',
-            url: 'http://127.0.0.1'
-        },
-    },
     'trac-server': {
         'host': 'localhost',
         'port': 9000,
