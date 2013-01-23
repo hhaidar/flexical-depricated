@@ -58,6 +58,11 @@
                         </table>
                     </div>
                     {% raw %}
+                        <script type="text/x-handlebars-template" data-template="sum">
+                            <li data-id="{{ key }}">
+                                {{ key }}: {{ count }}
+                            </li>
+                        </script>
                         <script type="text/x-handlebars-template" data-template="ticket">
                             <tr data-item="ticket" data-id="{{ ticket.id }}">
                                 <td>{{ ticket.id }}</td>
