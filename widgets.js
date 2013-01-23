@@ -42,6 +42,8 @@ var checkServers = function (servers, emitter) {
 
 var iterationProgress = function(tracServer, emitter) {
     var statusOrder = ['new', 'assigned', 'accepted', 'reopened', 'code_review', 'in_qa', 'closed'];
+    var statusMap = {'new': 'dev', 'assigned': 'dev', 'accepted': 'dev',
+        'reopened': 'dev', 'code_review': 'review', 'in_qa': 'qa', 'closed': 'closed'};
     iterationProgress.loadTickets(tracServer, function(milestone, tickets) {
         _.sortBy(tickets, function(x) {
             return statusOrder.indexOf(x[3].status);
@@ -51,6 +53,10 @@ var iterationProgress = function(tracServer, emitter) {
             ticket[3].id = ticket[0];
             data.tickets.push(ticket[3]);
         });
+        data.ticketSums = _.groupBy(data.tickets, function (ticket) {return statusMap[ticket.status];});
+        _.each(_.keys(data.ticketSums), function (key) {
+            data.ticketSums[key] = data.ticketSums[key].length;});
+        data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User story"});
         emitter(data);
     });
 };
@@ -91,7 +97,7 @@ iterationProgress.loadTickets = function(tracServer, callback) {
         tracServer.username, tracServer.password);
     trac.ourOpts = {path: "/login/jsonrpc"};
     iterationProgress.getMilestone(trac, function(milestone) {
-        var query = "milestone=" + milestone + "&type=User story";
+        var query = "milestone=" + milestone;
         trac.call("ticket.query", [query], trac.ourOpts, function(err, ticketIds) {
             var ticketCalls = [];
             _.each(ticketIds, function(ticketId) {

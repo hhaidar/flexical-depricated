@@ -70,15 +70,20 @@ window.ServersView = Backbone.View.extend({
 window.IterationView = Backbone.View.extend({
     initialize: function() {
         var self = this;
-        this.template = Handlebars.compile(this.$('[data-template]').html());
+        this.sumTemplate = Handlebars.compile(this.$('[data-template=sum]').html());
+        this.ticketTemplate = Handlebars.compile(this.$('[data-template=ticket]').html());
         console.log("initialized");
     },
     update: function(data) {
         var self = this;
         self.$('.title').text("Iteration " + data.milestone);
+        self.$('.summary').empty();
+        _.each(data.ticketSums, function(count, key) {
+            self.$('.summary').append(self.sumTemplate({key: key, count: count}));
+        });
         self.$('.tickets').empty();
-        _.each(data.tickets, function(ticket) {
-            self.$('.tickets').append(self.template({ticket: ticket}));
+        _.each(data.userStories, function(ticket) {
+            self.$('.tickets').append(self.ticketTemplate({ticket: ticket}));
         });
     }
 });
