@@ -52,16 +52,16 @@
                 <div class="widget" data-id="iteration" >
                     <div class="content">
                         <h2 class="title" data-field="title">Iteration</h2>
-                        <ul class="summary">
-                        </ul>
+                        <div class="progress summary">
+                        </div>
                         <table class="tickets">
                         </table>
                     </div>
                     {% raw %}
                         <script type="text/x-handlebars-template" data-template="sum">
-                            <li data-id="{{ key }}">
-                                {{ key }}: {{ count }}
-                            </li>
+                            {{#if count}}
+                            <div class="bar {{barClass}}" style="width: {{percent}}%">{{key}}: {{count}}</div>
+                            {{/if}}
                         </script>
                         <script type="text/x-handlebars-template" data-template="ticket">
                             <tr data-item="ticket" data-id="{{ ticket.id }}">
