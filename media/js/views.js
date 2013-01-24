@@ -75,11 +75,17 @@ window.IterationView = Backbone.View.extend({
         console.log("initialized");
     },
     update: function(data) {
+        var statusToBarClass = {'dev': 'bar-danger', 'review': 'bar-warning',
+            'qa': 'bar-info', 'closed': 'bar-success'};
         var self = this;
         self.$('.title').text("Iteration " + data.milestone);
         self.$('.summary').empty();
-        _.each(data.ticketSums, function(count, key) {
-            self.$('.summary').append(self.sumTemplate({key: key, count: count}));
+        var total = _.reduce(_.values(data.ticketSums), function (a, b) { return a + b; });
+        _.each(['dev', 'review', 'qa', 'closed'], function(key) {
+            var count = data.ticketSums[key];
+            self.$('.summary').append(self.sumTemplate(
+                {key: key, barClass: statusToBarClass[key], count: count,
+                  percent: Math.round((count/total) * 100)}));
         });
         self.$('.tickets').empty();
         _.each(data.userStories, function(ticket) {
