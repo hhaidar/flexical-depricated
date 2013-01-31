@@ -20,7 +20,8 @@ var checkServers = function (servers, emitter) {
             }
             request({
                 uri: server.url,
-                method: server.method || 'GET'
+                method: server.method || 'GET',
+                timeout: 5000
             }, function (err, res, body) {
                 if (err || server.test && !server.test(res, body)) {
                     // Well shit
@@ -136,7 +137,6 @@ var checkZendesk = function (client, emitter) {
     });
 }
 
-
 module.exports = {
     'zendesk': {
         interval: 15 * 60 * 1000, // check every 15 minutes
@@ -163,7 +163,7 @@ module.exports = {
         }
     },
     'iteration': {
-        interval: 60 * 10000,
+        interval: 10 * 60 * 1000,
         fetch: function(emitter) {
             iterationProgress(config['trac-server'], emitter)
         }
