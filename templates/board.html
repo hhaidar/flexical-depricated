@@ -2,8 +2,7 @@
 
 {% block page %}
     <header id="header">
-        <div class="column">
-        </div>
+        <div class="column"></div>
         <div class="column title">
             <h1>
                 {% if config.board.title %}
@@ -21,7 +20,7 @@
     </header>
     <article class="widgets">
         <div class="row">
-            <div class="column" style="width:33%;">
+            <div class="column">
                 <div class="widget" data-id="production-servers">
                     <div class="content">
                         <h2 class="title" data-field="title">Production Servers</h2>
@@ -46,35 +45,8 @@
                             </li>
                         </script>
                     {% endraw %}
-                </div>
-            </div>
-            <div class="column" style="width:66%;">
-                <div class="widget" data-id="iteration" >
-                    <div class="content">
-                        <h2 class="title" data-field="title">Iteration</h2>
-                        <div class="progress summary">
-                        </div>
-                        <table class="tickets">
-                        </table>
-                    </div>
-                    {% raw %}
-                        <script type="text/x-handlebars-template" data-template="sum">
-                            {{#if count}}
-                            <div class="bar {{barClass}}" style="width: {{percent}}%">{{key}}: {{count}}</div>
-                            {{/if}}
-                        </script>
-                        <script type="text/x-handlebars-template" data-template="ticket">
-                            <tr data-item="ticket" data-id="{{ ticket.id }}">
-                                <td>{{ ticket.id }}</td>
-                                <td>{{ ticket.status }}</td>
-                                <td>{{ ticket.summary }}</td>
-                            </tr>
-                        </script>
-                    {% endraw %}
-                </div>
-            </div>
-        </div>
-        <div class="row">
+                </div><!-- widget end -->
+            </div><!-- column end -->
             <div class="column">
                 <div class="widget" data-id="internal-servers">
                     <div class="content">
@@ -100,24 +72,8 @@
                             </li>
                         </script>
                     {% endraw %}
-                </div>
-            </div>
-            <div class="column">
-                <div class="widget" data-id="events" >
-                    <div class="content">
-                        <h2 class="title" data-field="title">Events</h2>
-                        <table>
-                            {% for event in config.events %}
-                                <tr data-item="event">
-                                    <td>{{ event.date }}</td>
-                                    <td>{{ event.name }}</td>
-                                    <td>{{ event.description }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                </div>
-            </div>
+                </div><!-- widget end -->
+            </div><!-- column end -->
             <div class="column">
                 <div class="widget" data-id="support">
                     <div class="content">
@@ -135,10 +91,56 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                        <p>Oldest ticket updated <span id="zendesk-oldest"></span>.</p>
+                        <p class="last-updated">Oldest ticket updated <span id="zendesk-oldest"></span>.</p>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div><!-- widget end -->
+            </div><!-- column end -->
+        </div><!-- row end -->
+        <div class="row">
+            <div class="column">
+                <div class="widget" data-id="iteration">
+                    <div class="content">
+                        <h2 class="title" data-field="title">
+                            Iteration <span data-field="version"></span>
+                        </h2>
+                        <div class="progress summary">
+                        </div>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="sum">
+                            {{#if count}}
+                            <div class="bar {{barClass}}" style="width: {{percent}}%">
+                                {{key}}: {{count}}
+                            </div>
+                            {{/if}}
+                        </script>
+                    {% endraw %}
+                </div><!-- widget end -->
+            </div><!-- column end -->
+            <div class="column">
+                <div class="widget" data-id="iteration">
+                    <div class="content">
+                        <h2 class="title" data-field="title">User Stories</h2>
+                        <table class="tickets"></table>
+                    </div>
+                    {% raw %}
+                        <script type="text/x-handlebars-template" data-template="ticket">
+                            <tr data-item="ticket" data-id="{{ ticket.id }}">
+                                <th>
+                                    <span class="label
+                                        {{#if_eq ticket.status compare='assigned'}}label-important{{/if_eq}}
+                                        {{#if_eq ticket.status compare='in_code_review'}}label-warning{{/if_eq}}
+                                        {{#if_eq ticket.status compare='closed'}}label-success{{/if_eq}}
+                                    ">
+                                        {{ ticket.id }}
+                                    </span>
+                                </th>
+                                <td>{{ ticket.summary }}</td>
+                            </tr>
+                        </script>
+                    {% endraw %}
+                </div><!-- widget end -->
+            </div><!-- column end -->
+        </div><!-- row end -->
     </article>
 {% endblock %}
