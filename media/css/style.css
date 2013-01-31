@@ -5505,8 +5505,9 @@ header {
   src: url('../font/OpenSans-Regular.ttf');
 }
 body {
+  background: #444;
   font: 1em 'Open Sans', Helvetica;
-  color: #444;
+  color: #fff;
 }
 header {
   height: 70px;
@@ -5521,7 +5522,7 @@ header .title {
 header .title h1 {
   text-transform: uppercase;
   line-height: inherit;
-  font-size: 50px;
+  font-size: 60px;
   margin: 0;
 }
 header .status {
@@ -5591,13 +5592,18 @@ header [data-indicator="disconnected"] {
   color: #fff;
   font-size: 24px;
 }
-.widget table td {
+.widget table td,
+.widget table th {
   padding: 10px 5px;
+}
+.widget table td {
+  vertical-align: top;
+  text-align: left;
 }
 .widget .title {
   line-height: 100%;
-  font-size: 40px;
-  margin-bottom: 15px;
+  font-size: 50px;
+  margin-bottom: 25px;
 }
 .widget .people {
   overflow: hidden;
@@ -5637,7 +5643,7 @@ header [data-indicator="disconnected"] {
   display: block;
 }
 .widget .stats {
-  font-size: 25px;
+  font-size: 40px;
 }
 .widget .servers {
   font-size: 16px;
@@ -5661,8 +5667,21 @@ header [data-indicator="disconnected"] {
   content: '';
 }
 .widget .focus-text {
-  font-size: 80px;
+  font-size: 100px;
   color: #fff;
+}
+.widget .last-updated {
+  font-size: 30px;
+  margin-top: 20px;
+}
+.widget .progress {
+  height: 150px;
+  line-height: 150px;
+  margin: 30px 5%;
+}
+.widget .label {
+  font-size: inherit;
+  padding: 5px 10px;
 }
 footer .content {
   width: 100%;

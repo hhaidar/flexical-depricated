@@ -21,7 +21,7 @@ var checkServers = function (servers, emitter) {
             request({
                 uri: server.url,
                 method: server.method || 'GET',
-                timeout: 5000
+                timeout: 10 * 1000
             }, function (err, res, body) {
                 if (err || server.test && !server.test(res, body)) {
                     // Well shit
@@ -43,8 +43,15 @@ var checkServers = function (servers, emitter) {
 
 var iterationProgress = function(tracServer, emitter) {
     var statusOrder = ['new', 'assigned', 'accepted', 'reopened', 'code_review', 'in_qa', 'closed'];
-    var statusMap = {'new': 'dev', 'assigned': 'dev', 'accepted': 'dev',
-        'reopened': 'dev', 'code_review': 'review', 'in_qa': 'qa', 'closed': 'closed'};
+    var statusMap = {
+        'new': 'dev',
+        'assigned': 'dev',
+        'accepted': 'dev',
+        'reopened': 'dev',
+        'in_code_review': 'review',
+        'in_qa': 'qa',
+        'closed': 'closed'
+    };
     iterationProgress.loadTickets(tracServer, function(milestone, tickets) {
         _.sortBy(tickets, function(x) {
             return statusOrder.indexOf(x[3].status);
