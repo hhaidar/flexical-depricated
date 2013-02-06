@@ -128,10 +128,10 @@
                             <tr data-item="ticket" data-id="{{ ticket.id }}">
                                 <th>
                                     <span class="label
-                                        {{#if_eq ticket.status compare='assigned'}}label-important{{/if_eq}}
-                                        {{#if_eq ticket.status compare='in_code_review'}}label-warning{{/if_eq}}
-                                        {{#if_eq ticket.status compare='in_qa'}}label-info{{/if_eq}}
-                                        {{#if_eq ticket.status compare='closed'}}label-success{{/if_eq}}
+                                        {{#if_eq ticket.simpleStatus compare='dev'}}label-important{{/if_eq}}
+                                        {{#if_eq ticket.simpleStatus compare='review'}}label-warning{{/if_eq}}
+                                        {{#if_eq ticket.simpleStatus compare='qa'}}label-info{{/if_eq}}
+                                        {{#if_eq ticket.simpleStatus compare='closed'}}label-success{{/if_eq}}
                                     ">
                                         {{ ticket.id }}
                                     </span>
