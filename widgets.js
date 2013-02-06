@@ -42,7 +42,7 @@ var checkServers = function (servers, emitter) {
 
 
 var iterationProgress = function(tracServer, emitter) {
-    var statusOrder = ['new', 'assigned', 'accepted', 'reopened', 'code_review', 'in_qa', 'closed'];
+    var statusOrder = ['dev', 'review', 'qa', 'closed'];
     var statusMap = {
         'new': 'dev',
         'assigned': 'dev',
@@ -53,15 +53,17 @@ var iterationProgress = function(tracServer, emitter) {
         'closed': 'closed'
     };
     iterationProgress.loadTickets(tracServer, function(milestone, tickets) {
-        _.sortBy(tickets, function(x) {
-            return statusOrder.indexOf(x[3].status);
-        });
         var data = {milestone: milestone, tickets: []};
-        _.each(tickets, function(ticket) {
-            ticket[3].id = ticket[0];
-            data.tickets.push(ticket[3]);
+        _.each(tickets, function(ticketArray) {
+            var ticket = ticketArray[3];
+            ticket.id = ticketArray[0];
+            ticket.simpleStatus = statusMap[ticket.status];
+            data.tickets.push(ticket);
         });
-        data.ticketSums = _.groupBy(data.tickets, function (ticket) {return statusMap[ticket.status];});
+        data.tickets = _.sortBy(data.tickets, function(ticket) {
+            return statusOrder.indexOf(ticket.simpleStatus);
+        });
+        data.ticketSums = _.groupBy(data.tickets, function (ticket) {return ticket.simpleStatus});
         _.each(_.keys(data.ticketSums), function (key) {
             data.ticketSums[key] = data.ticketSums[key].length;});
         data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User story"});
