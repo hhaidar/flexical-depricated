@@ -128,11 +128,16 @@ var checkZendesk = function (client, emitter) {
         }).sortBy(function (t) {
             return t.updated_at
         }).value();
-        var oldest = open[0];
-        emitter({
-            'count': _(open).size(),
-            'oldest': oldest.updated_at
-        });
+        var open_tickets = _(open).size();
+        if (open_tickets > 0) {
+            var oldest = open[0];
+            emitter({
+                'count': open_tickets,
+                'oldest': oldest.updated_at
+            });
+        } else {
+            emitter({'count': 0});
+        }
     });
 }
 
