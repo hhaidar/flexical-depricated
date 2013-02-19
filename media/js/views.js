@@ -25,7 +25,7 @@ window.ZendeskView = Backbone.View.extend({
         }
         if (data.oldest) {
             this.$('p').show();
-            this.$('#zendesk-oldest').text(moment(data.oldest).fromNow());
+            this.$('#zendesk-oldest').text("Oldest ticket updated on " + moment(data.oldest).fromNow());
         }
     }
 });
