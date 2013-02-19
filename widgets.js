@@ -20,7 +20,8 @@ var checkServers = function (servers, emitter) {
             }
             request({
                 uri: server.url,
-                method: server.method || 'GET'
+                method: server.method || 'GET',
+                timeout: 10 * 1000
             }, function (err, res, body) {
                 if (err || server.test && !server.test(res, body)) {
                     // Well shit
@@ -41,19 +42,28 @@ var checkServers = function (servers, emitter) {
 
 
 var iterationProgress = function(tracServer, emitter) {
-    var statusOrder = ['new', 'assigned', 'accepted', 'reopened', 'code_review', 'in_qa', 'closed'];
-    var statusMap = {'new': 'dev', 'assigned': 'dev', 'accepted': 'dev',
-        'reopened': 'dev', 'code_review': 'review', 'in_qa': 'qa', 'closed': 'closed'};
+    var statusOrder = ['dev', 'review', 'qa', 'closed'];
+    var statusMap = {
+        'new': 'dev',
+        'assigned': 'dev',
+        'accepted': 'dev',
+        'reopened': 'dev',
+        'in_code_review': 'review',
+        'in_qa': 'qa',
+        'closed': 'closed'
+    };
     iterationProgress.loadTickets(tracServer, function(milestone, tickets) {
-        _.sortBy(tickets, function(x) {
-            return statusOrder.indexOf(x[3].status);
-        });
         var data = {milestone: milestone, tickets: []};
-        _.each(tickets, function(ticket) {
-            ticket[3].id = ticket[0];
-            data.tickets.push(ticket[3]);
+        _.each(tickets, function(ticketArray) {
+            var ticket = ticketArray[3];
+            ticket.id = ticketArray[0];
+            ticket.simpleStatus = statusMap[ticket.status];
+            data.tickets.push(ticket);
         });
-        data.ticketSums = _.groupBy(data.tickets, function (ticket) {return statusMap[ticket.status];});
+        data.tickets = _.sortBy(data.tickets, function(ticket) {
+            return statusOrder.indexOf(ticket.simpleStatus);
+        });
+        data.ticketSums = _.groupBy(data.tickets, function (ticket) {return ticket.simpleStatus});
         _.each(_.keys(data.ticketSums), function (key) {
             data.ticketSums[key] = data.ticketSums[key].length;});
         data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User story"});
@@ -141,7 +151,6 @@ var checkZendesk = function (client, emitter) {
     });
 }
 
-
 module.exports = {
     'zendesk': {
         interval: 15 * 60 * 1000, // check every 15 minutes
@@ -168,7 +177,7 @@ module.exports = {
         }
     },
     'iteration': {
-        interval: 60 * 10000,
+        interval: 10 * 60 * 1000,
         fetch: function(emitter) {
             iterationProgress(config['trac-server'], emitter)
         }
