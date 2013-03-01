@@ -5645,6 +5645,15 @@ header [data-indicator="disconnected"] {
 .widget .stats {
   font-size: 40px;
 }
+.widget .builds td {
+  text-align: center;
+}
+.widget .builds .blue {
+  color: green;
+}
+.widget .builds .red {
+  color: red;
+}
 .widget .servers {
   font-size: 16px;
   padding: 0;
