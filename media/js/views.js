@@ -103,3 +103,18 @@ window.IterationView = Backbone.View.extend({
         });
     }
 });
+
+
+window.JenkinsView = Backbone.View.extend({
+    initialize: function() {
+        this.jobTemplate = Handlebars.compile(this.$('[data-template=jenkins-job]').html());
+    },
+    update: function(data) {
+        var self = this;
+        self.$('.builds').empty();
+        _.each(data.jobs, function (job) {
+            console.log(job);
+            self.$('.builds').append(self.jobTemplate(job));
+        });
+    } 
+});
