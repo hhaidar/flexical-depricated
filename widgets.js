@@ -151,7 +151,24 @@ var checkZendesk = function (client, emitter) {
     });
 }
 
+var checkJenkins = function (emitter) {
+    // Checks the Jenkins server and displays a list of running jobs
+    // and their status.
+    request.get({
+        url: "http://192.168.1.16:8080/api/json",
+        json: true,
+    }, function (error, response, body) {
+        emitter({jobs: body.jobs});
+    });
+}
+
 module.exports = {
+    'jenkins': {
+        interval: 1 * 60 * 1000, // check every 15 minutes
+        fetch: function(emitter) {
+            checkJenkins(emitter)
+        }
+    },
     'zendesk': {
         interval: 15 * 60 * 1000, // check every 15 minutes
         fetch: function(emitter) {

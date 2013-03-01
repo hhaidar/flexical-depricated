@@ -20,6 +20,9 @@ var Flexical = function() {
         }),
         'zendesk': new window.ZendeskView({
             el: '[data-id="support"]'
+        }),
+        'jenkins': new window.JenkinsView({
+            el: '[data-id="jenkins"]'
         })
     }
 
