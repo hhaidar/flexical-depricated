@@ -142,6 +142,19 @@
                     {% endraw %}
                 </div><!-- widget end -->
             </div><!-- column end -->
+            <div class="column">
+                <div class="widget" data-id="jenkins">
+                    <div class="content">
+                        <h2 class="title" data-field="title">Build Status</h2>
+                        <table class="builds"></table>
+                    </div>
+                    {% raw %}
+                    <script type="text/x-handlebars-template" data-template="jenkins-job">
+                        <tr><td class='{{ color }}'>{{ name }}</td></tr>
+                    </script>
+                    {% endraw %}
+                </div><!-- widget end -->
+            </div><!-- column end -->            
         </div><!-- row end -->
     </article>
 {% endblock %}
