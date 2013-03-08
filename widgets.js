@@ -181,43 +181,43 @@ var activeUsers = function (emitter) {
 
 module.exports = {
     'activeusers': {
-        interval: 60 * 1000, // check every 5 minutes
+        interval: 5 * 60 * 1000, // check every 5 minutes
         fetch: function(emitter) {
             activeUsers(emitter)
         }
-    },    
+    },
     'jenkins': {
-        interval: 5 * 60 * 1000, // check every 5 minutes
+        interval: 1 * 60 * 1000,
         fetch: function(emitter) {
             checkJenkins(emitter)
         }
     },
     'zendesk': {
-        interval: 15 * 60 * 1000, // check every 15 minutes
+        interval: 10 * 60 * 1000, // check every 10 minutes
         fetch: function(emitter) {
             checkZendesk(zendesk.createClient(config['zendesk']), emitter)
         }
     },
     'production-servers': {
-        interval: 2 * 60 * 1000,
+        interval: 1 * 60 * 1000,
         fetch: function(emitter) {
             checkServers(config['production-servers'], emitter)
         }
     },
     'internal-servers': {
-        interval: 2 * 60 * 1000,
+        interval: 1 * 60 * 1000,
         fetch: function(emitter) {
             checkServers(config['internal-servers'], emitter)
         }
     },
     'web-servers': {
-        interval: 2 * 60 * 1000,
+        interval: 1 * 60 * 1000,
         fetch: function(emitter) {
             checkServers(config['web-servers'], emitter)
         }
     },
     'iteration': {
-        interval: 10 * 60 * 1000,
+        interval: 10 * 60 * 1000, // check every 10 minutes
         fetch: function(emitter) {
             iterationProgress(config['trac-server'], emitter)
         }
