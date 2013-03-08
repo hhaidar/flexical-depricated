@@ -111,13 +111,19 @@
         </div><!-- row end -->
         <div class="row">
             <div class="column">
+                <div class="widget" data-id="activeusers">
+                    <div class="content">
+                        <h2 class="title" data-field="title"><span id="active-users-count"></span> Active Users</h2>
+                        <p>So many!</p>
+                    </div>
+                </div><!-- widget end -->
+            </div><!-- column end -->
+            <div style="width:50%" class="column">
                 <div class="widget" data-id="iteration">
                     <div class="content">
-                        <h2 class="title" data-field="title">
-                            Iteration <span data-field="version"></span>
-                        </h2>
-                        <div class="progress summary">
-                        </div>
+                        <h2 class="title" data-field="title">Iteration <span data-field="version"></span></h2>
+                        <div class="progress summary"></div>
+                        <table class="tickets"></table>
                     </div>
                     {% raw %}
                         <script type="text/x-handlebars-template" data-template="sum">
@@ -127,16 +133,6 @@
                             </div>
                             {{/if}}
                         </script>
-                    {% endraw %}
-                </div><!-- widget end -->
-            </div><!-- column end -->
-            <div class="column">
-                <div class="widget" data-id="iteration">
-                    <div class="content">
-                        <h2 class="title" data-field="title">User Stories</h2>
-                        <table class="tickets"></table>
-                    </div>
-                    {% raw %}
                         <script type="text/x-handlebars-template" data-template="ticket">
                             <tr data-item="ticket" data-id="{{ ticket.id }}">
                                 <th>

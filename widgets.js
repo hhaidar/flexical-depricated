@@ -162,9 +162,32 @@ var checkJenkins = function (emitter) {
     });
 }
 
+var activeUsers = function (emitter) {
+    // Checks Graphite for the current active users count.
+    request.get({
+        url: "http://localhost:2300/render/?target=sum(useractive.*)&format=json&from=-15min",
+        json: true,
+    }, function (error, response, body) {
+        if (_(body).size() > 0) {
+            data = body[0].datapoints;
+            size = _(data).size();
+            if (size - 2 > 0) {
+                emitter({activeusers: data[size-2][0]});
+            }
+
+        }
+    });
+}
+
 module.exports = {
+    'activeusers': {
+        interval: 60 * 1000, // check every 5 minutes
+        fetch: function(emitter) {
+            activeUsers(emitter)
+        }
+    },    
     'jenkins': {
-        interval: 1 * 60 * 1000, // check every 15 minutes
+        interval: 5 * 60 * 1000, // check every 5 minutes
         fetch: function(emitter) {
             checkJenkins(emitter)
         }
@@ -176,19 +199,19 @@ module.exports = {
         }
     },
     'production-servers': {
-        interval: 120 * 1000,
+        interval: 2 * 60 * 1000,
         fetch: function(emitter) {
             checkServers(config['production-servers'], emitter)
         }
     },
     'internal-servers': {
-        interval: 60 * 1000,
+        interval: 2 * 60 * 1000,
         fetch: function(emitter) {
             checkServers(config['internal-servers'], emitter)
         }
     },
     'web-servers': {
-        interval: 60 * 1000,
+        interval: 2 * 60 * 1000,
         fetch: function(emitter) {
             checkServers(config['web-servers'], emitter)
         }
