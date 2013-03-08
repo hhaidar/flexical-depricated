@@ -5649,10 +5649,13 @@ header [data-indicator="disconnected"] {
   text-align: center;
 }
 .widget .builds .blue {
-  color: green;
+  color: #98DD9F;
+}
+.widget .builds .blue_anime {
+  color: #85A4D6;
 }
 .widget .builds .red {
-  color: red;
+  color: #DD514C;
 }
 .widget .servers {
   font-size: 16px;
@@ -5684,8 +5687,8 @@ header [data-indicator="disconnected"] {
   margin-top: 20px;
 }
 .widget .progress {
-  height: 150px;
-  line-height: 150px;
+  height: 50px;
+  line-height: 50px;
   margin: 30px 5%;
 }
 .widget .label {

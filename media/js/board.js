@@ -23,7 +23,10 @@ var Flexical = function() {
         }),
         'jenkins': new window.JenkinsView({
             el: '[data-id="jenkins"]'
-        })
+        }),
+        'activeusers': new window.ActiveUsersView({
+            el: '[data-id="activeusers"]'
+        })        
     }
 
     this.socket = io.connect();

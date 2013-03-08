@@ -113,8 +113,17 @@ window.JenkinsView = Backbone.View.extend({
         var self = this;
         self.$('.builds').empty();
         _.each(data.jobs, function (job) {
-            console.log(job);
             self.$('.builds').append(self.jobTemplate(job));
         });
     } 
+});
+
+
+window.ActiveUsersView = Backbone.View.extend({
+    initialize: function () {
+        this.field = this.$('#active-users-count');
+    },
+    update: function(data) {
+        this.field.text(data.activeusers);
+    }
 });
