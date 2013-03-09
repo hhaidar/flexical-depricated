@@ -158,7 +158,9 @@ var checkJenkins = function (emitter) {
         url: "http://192.168.1.16:8080/api/json",
         json: true,
     }, function (error, response, body) {
-        emitter({jobs: body.jobs});
+        if (body && body.jobs) {
+            emitter({jobs: body.jobs});
+        }
     });
 }
 
