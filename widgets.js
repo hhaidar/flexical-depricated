@@ -66,7 +66,11 @@ var iterationProgress = function(tracServer, emitter) {
         data.ticketSums = _.groupBy(data.tickets, function (ticket) {return ticket.simpleStatus});
         _.each(_.keys(data.ticketSums), function (key) {
             data.ticketSums[key] = data.ticketSums[key].length;});
+<<<<<<< HEAD
         data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User story"});
+=======
+        data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User Story"});
+>>>>>>> d811f98644668e0b0a7dd984223610c921c1e48b
         emitter(data);
     });
 };
@@ -158,9 +162,13 @@ var checkJenkins = function (emitter) {
         url: "http://192.168.1.16:8080/api/json",
         json: true,
     }, function (error, response, body) {
+<<<<<<< HEAD
         if (body && body.jobs) {
             emitter({jobs: body.jobs});
         }
+=======
+        emitter({jobs: body.jobs});
+>>>>>>> d811f98644668e0b0a7dd984223610c921c1e48b
     });
 }
 
