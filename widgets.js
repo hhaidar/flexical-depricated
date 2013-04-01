@@ -66,7 +66,7 @@ var iterationProgress = function(tracServer, emitter) {
         data.ticketSums = _.groupBy(data.tickets, function (ticket) {return ticket.simpleStatus});
         _.each(_.keys(data.ticketSums), function (key) {
             data.ticketSums[key] = data.ticketSums[key].length;});
-        data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User story"});
+        data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User Story"});
         emitter(data);
     });
 };
