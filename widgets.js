@@ -3,33 +3,38 @@ var _       = require('underscore'),
     http    = require('http'),
     request = require('request'),
     rpc     = require('jsonrpc2'),
-    zendesk = require('node-zendesk')
+    zendesk = require('node-zendesk');
 
 var config  = require('./config.js');
 
 
 var checkServers = function (servers, emitter) {
     var requests = [];
-    var servers = servers;
     _.each(servers || false, function (server, id) {
         requests.push(function (callback) {
-            var current = {
-                id: id,
-                name: server.name,
-                status: 'up'
-            }
             request({
                 uri: server.url,
                 method: server.method || 'GET',
                 timeout: 10 * 1000
             }, function (err, res, body) {
                 if (err || server.test && !server.test(res, body)) {
-                    // Well shit
-                    current.status = 'down'
-                    callback(null, current);
-                    return;
+                    if (server.status === 'maybe-down' ||
+                        server.status === 'down') {
+                        // Well shit
+                        server.status = 'down';
+                    } else {
+                        // current status was
+                        server.status = 'maybe-down';
+                    }
+                } else {
+                    server.status = 'up';
                 }
-                callback(null, current)
+                var current = {
+                    id: id,
+                    name: server.name,
+                    status: server.status
+                };
+                callback(null, current);
             });
         });
     });
@@ -38,7 +43,7 @@ var checkServers = function (servers, emitter) {
         data.servers = res;
         emitter(data);
     });
-}
+};
 
 
 var iterationProgress = function(tracServer, emitter) {
@@ -63,10 +68,10 @@ var iterationProgress = function(tracServer, emitter) {
         data.tickets = _.sortBy(data.tickets, function(ticket) {
             return statusOrder.indexOf(ticket.simpleStatus);
         });
-        data.ticketSums = _.groupBy(data.tickets, function (ticket) {return ticket.simpleStatus});
+        data.ticketSums = _.groupBy(data.tickets, function (ticket) {return ticket.simpleStatus;});
         _.each(_.keys(data.ticketSums), function (key) {
             data.ticketSums[key] = data.ticketSums[key].length;});
-        data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User Story"});
+        data.userStories = _.filter(data.tickets, function (ticket) {return ticket.type == "User Story";});
         emitter(data);
     });
 };
@@ -74,7 +79,7 @@ var iterationProgress = function(tracServer, emitter) {
 iterationProgress.getMilestone = function(trac, callback) {
     trac.call("ticket.milestone.getAll", [], trac.ourOpts, function(err, result) {
         if (result) {
-            var milestones = _.reject(result, function(x) {return isNaN(parseInt(x[0]))});
+            var milestones = _.reject(result, function(x) {return isNaN(parseInt(x[0], 10));});
             iterationProgress.pickActiveMilestone(trac, milestones, callback);
         }
     });
@@ -120,7 +125,7 @@ iterationProgress.loadTickets = function(tracServer, callback) {
             });
         });
     });
-}
+};
 
 var checkZendesk = function (client, emitter) {
     // Checks the number of open tickets (here open means not closed, not just
@@ -129,14 +134,14 @@ var checkZendesk = function (client, emitter) {
 
     client.tickets.list(function (err, req, result) {
         if (err) {
-            emitter({'error': "Can not connect to Zendesk"})
+            emitter({'error': "Can not connect to Zendesk"});
             return;
         }
         // TODO: Filter out closed tickets in the request rather than in JS.
         var open = _.chain(result).filter(function (t) {
-            return t.status !== 'closed' && t.status !== 'solved'
+            return t.status !== 'closed' && t.status !== 'solved';
         }).sortBy(function (t) {
-            return t.updated_at
+            return t.updated_at;
         }).value();
         var open_tickets = _(open).size();
         if (open_tickets > 0) {
@@ -149,26 +154,26 @@ var checkZendesk = function (client, emitter) {
             emitter({'count': 0});
         }
     });
-}
+};
 
 var checkJenkins = function (emitter) {
     // Checks the Jenkins server and displays a list of running jobs
     // and their status.
     request.get({
         url: "http://192.168.1.16:8080/api/json",
-        json: true,
+        json: true
     }, function (error, response, body) {
         if (body && body.jobs) {
             emitter({jobs: body.jobs});
         }
     });
-}
+};
 
 var activeUsers = function (emitter) {
     // Checks Graphite for the current active users count.
     request.get({
         url: "http://localhost:2300/render/?target=sum(useractive.*)&format=json&from=-15min",
-        json: true,
+        json: true
     }, function (error, response, body) {
         if (_(body).size() > 0) {
             data = body[0].datapoints;
@@ -179,52 +184,52 @@ var activeUsers = function (emitter) {
 
         }
     });
-}
+};
 
 module.exports = {
     'activeusers': {
         interval: 5 * 60 * 1000, // check every 5 minutes
         fetch: function(emitter) {
-            activeUsers(emitter)
+            activeUsers(emitter);
         }
     },
     'jenkins': {
         interval: 1 * 60 * 1000,
         fetch: function(emitter) {
-            checkJenkins(emitter)
+            checkJenkins(emitter);
         }
     },
     'zendesk': {
         interval: 10 * 60 * 1000, // check every 10 minutes
         fetch: function(emitter) {
-            checkZendesk(zendesk.createClient(config['zendesk']), emitter)
+            checkZendesk(zendesk.createClient(config['zendesk']), emitter);
         }
     },
     'production-servers': {
         interval: 1 * 60 * 1000,
         fetch: function(emitter) {
-            checkServers(config['production-servers'], emitter)
+            checkServers(config['production-servers'], emitter);
         }
     },
     'internal-servers': {
         interval: 1 * 60 * 1000,
         fetch: function(emitter) {
-            checkServers(config['internal-servers'], emitter)
+            checkServers(config['internal-servers'], emitter);
         }
     },
     'web-servers': {
         interval: 1 * 60 * 1000,
         fetch: function(emitter) {
-            checkServers(config['web-servers'], emitter)
+            checkServers(config['web-servers'], emitter);
         }
     },
     'iteration': {
         interval: 10 * 60 * 1000, // check every 10 minutes
         fetch: function(emitter) {
-            iterationProgress(config['trac-server'], emitter)
+            iterationProgress(config['trac-server'], emitter);
         }
     }
-}
+};
 
 
 // Overwrite connectHttp method with one that sets content-type
