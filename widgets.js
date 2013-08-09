@@ -170,14 +170,12 @@ var checkJenkins = function (emitter) {
 };
 
 var sdeStats = function (emitter) {
-    api_calls = [];
+    var requests = [];
     _(config.sdestats.tokens).each(function (token) {
         api_calls.push(function (callback) {
             var t = token.split('@');
             var api_token = t[0];
             var server = t[1];
-
-            console.log(api_token + " - " + server);
 
             var HEADERS = {
                 'X-API-TOKEN': api_token,
@@ -193,9 +191,7 @@ var sdeStats = function (emitter) {
         });
     });
 
-    console.log(api_calls);
-
-    async.parallel(api_calls, function(err, results) {
+    async.parallel(requests, function(err, results) {
         var totals = {
             'users': 0,
             'projects': 0,
@@ -206,8 +202,6 @@ var sdeStats = function (emitter) {
             totals.projects += result.total_projects;
             totals.active_users += result.active_users;
         });
-
-        console.log(totals);
 
         emitter(totals);
     });
