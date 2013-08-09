@@ -169,28 +169,55 @@ var checkJenkins = function (emitter) {
     });
 };
 
-var activeUsers = function (emitter) {
-    // Checks Graphite for the current active users count.
-    request.get({
-        url: "http://localhost:2300/render/?target=sum(useractive.*)&format=json&from=-15min",
-        json: true
-    }, function (error, response, body) {
-        if (_(body).size() > 0) {
-            data = body[0].datapoints;
-            size = _(data).size();
-            if (size - 2 > 0) {
-                emitter({activeusers: data[size-2][0]});
-            }
+var sdeStats = function (emitter) {
+    api_calls = [];
+    _(config.sdestats.tokens).each(function (token) {
+        api_calls.push(function (callback) {
+            var t = token.split('@');
+            var api_token = t[0];
+            var server = t[1];
 
-        }
+            console.log(api_token + " - " + server);
+
+            var HEADERS = {
+                'X-API-TOKEN': api_token,
+                'Accept': 'application/json'
+            };
+            request.get({
+                url: "http://" + server + "/api/stats/",
+                headers: HEADERS,
+                json: true
+            }, function (error, response, body) {
+                callback(null, body);
+            });
+        });
+    });
+
+    console.log(api_calls);
+
+    async.parallel(api_calls, function(err, results) {
+        var totals = {
+            'users': 0,
+            'projects': 0,
+            'active_users': 0
+        };
+        _(results).each(function (result) {
+            totals.users += result.total_users;
+            totals.projects += result.total_projects;
+            totals.active_users += result.active_users;
+        });
+
+        console.log(totals);
+
+        emitter(totals);
     });
 };
 
 module.exports = {
     'activeusers': {
-        interval: 5 * 60 * 1000, // check every 5 minutes
+        interval: 1 * 60 * 1000, // check every 5 minutes
         fetch: function(emitter) {
-            activeUsers(emitter);
+            sdeStats(emitter);
         }
     },
     'jenkins': {
