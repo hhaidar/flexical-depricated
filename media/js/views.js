@@ -115,15 +115,19 @@ window.JenkinsView = Backbone.View.extend({
         _.each(data.jobs, function (job) {
             self.$('.builds').append(self.jobTemplate(job));
         });
-    } 
+    }
 });
 
 
 window.ActiveUsersView = Backbone.View.extend({
     initialize: function () {
-        this.field = this.$('#active-users-count');
+        this.$active_users = this.$('#active-users-count');
+        this.$total_users = this.$('#total-users-count');
+        this.$total_projects = this.$('#total-projects-count');
     },
     update: function(data) {
-        this.field.text(data.activeusers);
+        this.$active_users.text(data.active_users);
+        this.$total_users.text(data.users);
+        this.$total_projects.text(data.projects);
     }
 });
