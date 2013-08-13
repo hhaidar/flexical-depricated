@@ -172,7 +172,7 @@ var checkJenkins = function (emitter) {
 var sdeStats = function (emitter) {
     var requests = [];
     _(config.sdestats.tokens).each(function (token) {
-        api_calls.push(function (callback) {
+        requests.push(function (callback) {
             var t = token.split('@');
             var api_token = t[0];
             var server = t[1];
